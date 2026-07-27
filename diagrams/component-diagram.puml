@@ -1,0 +1,52 @@
+@startuml
+title Component Diagram - Campus Care & Facility Reports Integration
+
+skinparam componentStyle rectangle
+
+package "campus-web (Laravel Web App)" {
+  [Web UI / Views] as WebUI
+  [Routes (web.php)] as WebRoutes
+  [Controllers\n(FacilityConsumerController, AdminFacilityController)] as WebControllers
+  [HTTP Client (Laravel Http Facade)] as WebHttp
+}
+
+package "reportfacility-api (Laravel API Microservice)" {
+  [API Routes (routes/api.php)] as ApiRoutes
+
+  [AuthController] as AuthController
+  [FacilityReportController] as FacilityReportController
+  [RoomController] as RoomController
+  [CampusAssetController] as CampusAssetController
+
+  [Middleware: auth:sanctum] as Sanctum
+}
+
+package "campus_care (Flutter Mobile App)" {
+  [Mobile UI] as MobileUI
+  [API Client (Flutter HTTP)] as MobileHttp
+}
+
+' Web -> API (EAI endpoints for integration)
+WebRoutes --> WebControllers : Calls
+WebControllers --> WebHttp : Uses Http facade
+WebHttp --> ApiRoutes : HTTP/JSON\nGET/POST/PUT /api/eai/*
+
+' EAI endpoints handled by controllers
+ApiRoutes --> FacilityReportController : /api/eai/facility-reports\nGET/POST/PUT
+ApiRoutes --> RoomController : /api/eai/rooms\nGET/POST
+ApiRoutes --> AuthController : /api/eai/sync-user\nPOST
+
+' Protected endpoints
+ApiRoutes --> Sanctum : auth:sanctum group
+Sanctum --> FacilityReportController : /api/facility-reports (protected)
+Sanctum --> RoomController : /api/rooms (protected)
+Sanctum --> CampusAssetController : /api/campus-assets (protected)
+
+' Mobile -> API (Sanctum protected)
+MobileUI --> MobileHttp : User actions
+MobileHttp --> ApiRoutes : HTTP/JSON\nAuthorization: Bearer\n(when calling protected endpoints)
+
+' Data flow hint (file upload from web)
+WebControllers ..> FacilityReportController : POST multipart\nfoto + reporter_* fields
+
+@enduml

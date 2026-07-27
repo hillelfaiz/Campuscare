@@ -1,0 +1,4 @@
+- [ ] Build component diagram (PlantUML) untuk: campus-web, reportfacility-api, campus_care dan hubungan HTTP (EAI vs protected Sanctum).
+- [ ] Build deployment diagram (PlantUML) untuk: deployment node web server campus-web, API server reportfacility-api (port 8001), device/emulator campus_care.
+- [ ] Export hasil diagram ke file .puml di direktori `diagrams/`.
+- [ ] (Opsional) Jalankan command untuk render diagram (jika tersedia tooling PlantUML).

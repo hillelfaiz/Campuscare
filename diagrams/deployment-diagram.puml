@@ -1,0 +1,33 @@
+@startuml
+title Deployment Diagram - campus-web, reportfacility-api, campus_care
+
+skinparam componentStyle rectangle
+
+node "User / Admin Devices" {
+  [Mobile / Campus Care (Flutter)] as CampusCareDevice
+}
+
+node "Web Server Host" {
+  node "campus-web (Laravel)" as CampusWeb {
+    [Laravel App] as CampusWebApp
+  }
+}
+
+node "API Server Host" {
+  node "reportfacility-api (Laravel API)" as FacilityAPI {
+    [Laravel API + Sanctum] as FacilityAPIApp
+  }
+}
+
+database "Storage (Database, Redis, etc.)" as Storage {
+  [DB / Media Storage] as DB
+}
+
+' Connections
+CampusCareDevice --> FacilityAPIApp : HTTP/JSON\nAuthorization: Bearer\n(Protected: /api/*)
+CampusWebApp --> FacilityAPIApp : HTTP/JSON + multipart\n(eai endpoints)\nBase: http://127.0.0.1:8001/api
+
+' API persistence (conceptual)
+FacilityAPIApp --> DB : CRUD\nfacility-reports, rooms, assets
+
+@enduml

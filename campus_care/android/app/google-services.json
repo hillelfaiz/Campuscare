@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "405422988387",
+    "project_id": "campus-caree",
+    "storage_bucket": "campus-caree.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405422988387:android:ce01cd16bd5c5110802c56",
+        "android_client_info": {
+          "package_name": "com.example.campus_care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405422988387-rllou3ro0vivcc2dc37odhvte6s6v5sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeDRsEV7KKqY_npvAGto_8SGxQywTT_pw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405422988387-rllou3ro0vivcc2dc37odhvte6s6v5sd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
